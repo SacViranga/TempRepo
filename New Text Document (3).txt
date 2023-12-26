@@ -15,3 +15,12 @@ https://www.pluralsight.com/guides/how-to-implement-a-component-%22loop%22-with-
 
 https://effective-waffle-c5839fce.pages.github.io/?path=/story/atoms-avatar--sample
 
+
+UNCERTAIN
+ON GOING
+PARTIAL_SIGNED
+COMPLETED
+RETURNED
+RESET
+CANCEL
+
