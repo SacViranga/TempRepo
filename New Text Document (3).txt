@@ -15,6 +15,9 @@ https://www.pluralsight.com/guides/how-to-implement-a-component-%22loop%22-with-
 
 https://effective-waffle-c5839fce.pages.github.io/?path=/story/atoms-avatar--sample
 
+https://dotnet.microsoft.com/en-us/download/dotnet/8.0
+
+
 
 UNCERTAIN
 ON GOING
