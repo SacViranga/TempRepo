@@ -1,0 +1,19 @@
+  const [maxHeight, setMaxHeight] = useState(200); // Initial max height
+
+  useEffect(() => {
+    const updateMaxHeight = () => {
+      const windowHeight = window.innerHeight;
+      // Adjust maxHeight based on the screen size
+      setMaxHeight(windowHeight * 0.5); // For example, 50% of the screen height
+    };
+
+    updateMaxHeight(); // Call the function initially
+
+    // Event listener to update max height when the window is resized
+    window.addEventListener('resize', updateMaxHeight);
+
+    // Cleanup the event listener on component unmount
+    return () => {
+      window.removeEventListener('resize', updateMaxHeight);
+    };
+  }, []); // Empty dependency array ensures the effect runs only onc
