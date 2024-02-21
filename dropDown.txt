@@ -1,0 +1,33 @@
+import React, { useState } from 'react';
+
+const ButtonToDropdown = () => {
+  const [isDropdown, setIsDropdown] = useState(false);
+  const [selectedValue, setSelectedValue] = useState('');
+
+  const handleClick = () => {
+    setIsDropdown(true);
+  };
+
+  const handleSelect = (e) => {
+    setSelectedValue(e.target.value);
+    // Trigger your click event here
+    console.log('Selected value:', e.target.value);
+  };
+
+  return (
+    <div>
+      {isDropdown ? (
+        <select onChange={handleSelect} value={selectedValue}>
+          <option value="">Select...</option>
+          <option value="option1">Option 1</option>
+          <option value="option2">Option 2</option>
+          <option value="option3">Option 3</option>
+        </select>
+      ) : (
+        <button onClick={handleClick}>Convert to Dropdown</button>
+      )}
+    </div>
+  );
+};
+
+export default ButtonToDropdown;
