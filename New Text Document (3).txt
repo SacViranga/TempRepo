@@ -15,18 +15,4 @@ https://www.pluralsight.com/guides/how-to-implement-a-component-%22loop%22-with-
 
 https://effective-waffle-c5839fce.pages.github.io/?path=/story/atoms-avatar--sample
 
-https://dotnet.microsoft.com/en-us/download/dotnet/8.0
-
-
-
-UNCERTAIN
-ON GOING
-PARTIAL_SIGNED
-COMPLETED
-RETURNED
-RESET
-CANCEL
-
-https://learn.microsoft.com/en-us/answers/questions/1297509/how-to-fix-this-error-warn-microsoft-aspnetcore-ht
-
-ファイル履歴
+string.Join("\\", path.Split('\\').Reverse().Skip(1).Reverse());
