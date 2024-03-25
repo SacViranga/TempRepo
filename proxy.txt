@@ -1,0 +1,16 @@
+npm config rm proxy
+npm config rm https-proxy
+
+npm config delete http-proxy
+npm config delete https-proxy
+
+set HTTP_PROXY=nullset HTTPS_PROXY=null
+
+
+$ npm cache clean --force
+
+
+[9:36 am] Uchibayashi, Akimasa/内林 光優
+proxy=http://172.31.1.225:8080/
+https-proxy=http://172.31.1.225:8080/
+ like 1
