@@ -16,3 +16,6 @@ https://www.pluralsight.com/guides/how-to-implement-a-component-%22loop%22-with-
 https://effective-waffle-c5839fce.pages.github.io/?path=/story/atoms-avatar--sample
 
 string.Join("\\", path.Split('\\').Reverse().Skip(1).Reverse());
+
+同じユーザーによる署名は1度だけ許可する
+Allow single signature per user
