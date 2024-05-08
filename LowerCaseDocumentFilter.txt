@@ -8,7 +8,8 @@ public class LowerCaseDocumentFilter : IDocumentFilter
     {
         foreach (var path in swaggerDoc.Paths.ToList())
         {
-            var newPath = path.Key.ToLowerInvariant();
+            //var newPath = path.Key.ToLowerInvariant();
+            var newPath = path.Key.Replace("[controller]", context.ApiDescriptions.First().RelativePath.Split('/').Last().ToLowerInvariant());
             swaggerDoc.Paths.Remove(path.Key);
             swaggerDoc.Paths.Add(newPath, path.Value);
         }
