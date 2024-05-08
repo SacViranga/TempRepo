@@ -15,3 +15,10 @@ public class LowerCaseDocumentFilter : IDocumentFilter
         }
     }
 }
+
+
+   // Customizing controller name handling
+                options.CustomOperationIds(apiDesc =>
+                {
+                    return apiDesc.ActionDescriptor.DisplayName.ToLower();
+                });
