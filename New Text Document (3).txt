@@ -17,5 +17,4 @@ https://effective-waffle-c5839fce.pages.github.io/?path=/story/atoms-avatar--sam
 
 string.Join("\\", path.Split('\\').Reverse().Skip(1).Reverse());
 
-同じユーザーによる署名は1度だけ許可する
-Allow single signature per user
+https://github.com/ShimadzuCorp/Bridge.Signature/commits/development/.github/workflows/unit-test-esignature-service.yml
