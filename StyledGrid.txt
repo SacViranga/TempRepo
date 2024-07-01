@@ -1,41 +1,49 @@
-import React, { useState } from 'react';
-import { DataGridPro } from '@mui/x-data-grid-pro';
+import React, { useRef } from 'react';
+import { DataGridPro, useGridApiRef } from '@mui/x-data-grid-pro';
 
-const initialRows = [
-  { id: 1, col1: 'Hello', col2: 'World' },
-  { id: 2, col1: 'DataGridPro', col2: 'is Awesome' },
-  { id: 3, col1: 'Material-UI', col2: 'rocks' },
+const rows = [
+  { id: 1, name: 'John', age: 25 },
+  { id: 2, name: 'Doe', age: 42 },
+  // Add more rows as needed
 ];
 
 const columns = [
-  { field: 'col1', headerName: 'Column 1', width: 150, editable: true },
-  { field: 'col2', headerName: 'Column 2', width: 150, editable: true },
+  { field: 'name', headerName: 'Name', width: 150, editable: true },
+  { field: 'age', headerName: 'Age', width: 150, editable: true },
+  // Add more columns as needed
 ];
 
 function App() {
-  const [rows, setRows] = useState(initialRows);
+  const apiRef = useGridApiRef();
 
-  const handleCellEditCommit = (params) => {
-    const updatedRows = rows.map((row) =>
-      row.id === params.id ? { ...row, [params.field]: params.value } : row
-    );
-    setRows(updatedRows);
+  const handleCellClick = (params, event) => {
+    // Prevent the default double click to edit
+    event.defaultMuiPrevented = true;
+
+    // Start editing when the cell is clicked
+    apiRef.current.startCellEditMode({
+      id: params.id,
+      field: params.field,
+    });
+
+    // Focus on the clicked cell
+    setTimeout(() => {
+      const input = document.querySelector(`[data-id="${params.id}"][data-field="${params.field}"] input`);
+      if (input) {
+        input.focus();
+        input.select();
+      }
+    });
   };
 
   return (
-    <div style={{ height: 300, width: '100%' }}>
+    <div style={{ height: 400, width: '100%' }}>
       <DataGridPro
+        apiRef={apiRef}
         rows={rows}
         columns={columns}
-        onCellEditCommit={handleCellEditCommit}
-        experimentalFeatures={{ newEditingApi: true }}
-        disableColumnMenu
-        onCellClick={(params, event) => {
-          // Check if the event was a click and not a double click or another type of interaction
-          if (event.detail === 1) {
-            params.api.setCellMode(params.id, params.field, 'edit');
-          }
-        }}
+        onCellClick={handleCellClick}
+        // Other props like pagination, sorting, etc.
       />
     </div>
   );
