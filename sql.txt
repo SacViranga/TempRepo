@@ -1,0 +1,244 @@
+USE [BridgeSystem]
+GO
+
+DECLARE @ResultCode BIGINT, @ResourceId NVARCHAR(64)
+SELECT @ResultCode = 655361, @ResourceId = 'MSG_SIGNATURE_FLOW_CONFIGURATION_STARTS'
+DELETE FROM [dbo].ResultCodeMaster WHERE ResultCode = @ResultCode;
+DELETE FROM [dbo].Resources WHERE Id = @ResourceId;
+DELETE FROM [dbo].ResourceMasters WHERE Id = @ResourceId;
+
+
+SELECT @ResultCode = 655362, @ResourceId = 'MSG_SIGNATURE_FLOW_CONFIGURATION_ENDS'
+DELETE FROM [dbo].ResultCodeMaster WHERE ResultCode = @ResultCode;
+DELETE FROM [dbo].Resources WHERE Id = @ResourceId;
+DELETE FROM [dbo].ResourceMasters WHERE Id = @ResourceId;
+
+
+SELECT @ResultCode = 655363, @ResourceId = 'MSG_SIGN_DATA_STARTS'
+DELETE FROM [dbo].ResultCodeMaster WHERE ResultCode = @ResultCode;
+DELETE FROM [dbo].Resources WHERE Id = @ResourceId;
+DELETE FROM [dbo].ResourceMasters WHERE Id = @ResourceId;
+
+
+SELECT @ResultCode = 655364, @ResourceId = 'MSG_SIGN_DATA_ENDS'
+DELETE FROM [dbo].ResultCodeMaster WHERE ResultCode = @ResultCode;
+DELETE FROM [dbo].Resources WHERE Id = @ResourceId;
+DELETE FROM [dbo].ResourceMasters WHERE Id = @ResourceId;
+
+
+SELECT @ResultCode = 655365, @ResourceId = 'MSG_SIGNATURE_FLOW_CONFIGURATION_ADD'
+DELETE FROM [dbo].ResultCodeMaster WHERE ResultCode = @ResultCode;
+DELETE FROM [dbo].Resources WHERE Id = @ResourceId;
+DELETE FROM [dbo].ResourceMasters WHERE Id = @ResourceId;
+
+
+SELECT @ResultCode = 655366, @ResourceId = 'MSG_SIGNATURE_FLOW_CONFIGURATION_UPDATE'
+DELETE FROM [dbo].ResultCodeMaster WHERE ResultCode = @ResultCode;
+DELETE FROM [dbo].Resources WHERE Id = @ResourceId;
+DELETE FROM [dbo].ResourceMasters WHERE Id = @ResourceId;
+
+
+SELECT @ResultCode = 655367, @ResourceId = 'MSG_SIGNATURE_FLOW_CONFIGURATION_VALID'
+DELETE FROM [dbo].ResultCodeMaster WHERE ResultCode = @ResultCode;
+DELETE FROM [dbo].Resources WHERE Id = @ResourceId;
+DELETE FROM [dbo].ResourceMasters WHERE Id = @ResourceId;
+
+
+SELECT @ResultCode = 655368, @ResourceId = 'MSG_SIGNATURE_FLOW_CONFIGURATION_INVALID'
+DELETE FROM [dbo].ResultCodeMaster WHERE ResultCode = @ResultCode;
+DELETE FROM [dbo].Resources WHERE Id = @ResourceId;
+DELETE FROM [dbo].ResourceMasters WHERE Id = @ResourceId;
+
+
+SELECT @ResultCode = 655369, @ResourceId = 'MSG_SIGNATURE_FLOW_CONFIGURATION_DELETE'
+DELETE FROM [dbo].ResultCodeMaster WHERE ResultCode = @ResultCode;
+DELETE FROM [dbo].Resources WHERE Id = @ResourceId;
+DELETE FROM [dbo].ResourceMasters WHERE Id = @ResourceId;
+
+
+SELECT @ResultCode = 655370, @ResourceId = 'MSG_SIGNATURE_SIGN'
+DELETE FROM [dbo].ResultCodeMaster WHERE ResultCode = @ResultCode;
+DELETE FROM [dbo].Resources WHERE Id = @ResourceId;
+DELETE FROM [dbo].ResourceMasters WHERE Id = @ResourceId;
+
+
+SELECT @ResultCode = 655371, @ResourceId = 'MSG_SIGNATURE_SIGN_FINAL'
+IF((SELECT count(1) From [dbo].ResultCodeMaster WHERE MessageResourceId = @ResourceId) = 0 )
+BEGIN
+	DELETE FROM [dbo].ResourceMasters WHERE Id = @ResourceId;
+	DELETE FROM [dbo].ResultCodeMaster WHERE ResultCode = @ResultCode;
+	DELETE FROM [dbo].Resources WHERE Id = @ResourceId;
+END
+
+SELECT @ResultCode = 655372, @ResourceId = 'MSG_SIGNATURE_SIGN_RETURN'
+DELETE FROM [dbo].ResultCodeMaster WHERE ResultCode = @ResultCode;
+DELETE FROM [dbo].Resources WHERE Id = @ResourceId;
+DELETE FROM [dbo].ResourceMasters WHERE Id = @ResourceId;
+
+
+SELECT @ResultCode = 655373, @ResourceId = 'MSG_SIGNATURE_SIGN_UNSIGN'
+DELETE FROM [dbo].ResultCodeMaster WHERE ResultCode = @ResultCode;
+DELETE FROM [dbo].Resources WHERE Id = @ResourceId;
+DELETE FROM [dbo].ResourceMasters WHERE Id = @ResourceId;
+
+
+SELECT @ResultCode = 655374, @ResourceId = 'MSG_SIGNATURE_SIGN_REJECT'
+DELETE FROM [dbo].ResultCodeMaster WHERE ResultCode = @ResultCode;
+DELETE FROM [dbo].Resources WHERE Id = @ResourceId;
+DELETE FROM [dbo].ResourceMasters WHERE Id = @ResourceId;
+
+
+SELECT @ResultCode = 655375, @ResourceId = 'MSG_SIGNATURE_SIGN_FAIL_SEND_MAIL'
+DELETE FROM [dbo].ResultCodeMaster WHERE ResultCode = @ResultCode;
+DELETE FROM [dbo].Resources WHERE Id = @ResourceId;
+DELETE FROM [dbo].ResourceMasters WHERE Id = @ResourceId;
+
+
+SELECT @ResultCode = 655376, @ResourceId = 'MSG_SIGNATURE_FLOW_CONFIGURATION_COPY'
+DELETE FROM [dbo].ResultCodeMaster WHERE ResultCode = @ResultCode;
+DELETE FROM [dbo].Resources WHERE Id = @ResourceId;
+DELETE FROM [dbo].ResourceMasters WHERE Id = @ResourceId;
+
+
+SELECT @ResultCode = 655377, @ResourceId = 'MSG_SIGNATURE_FLOW_CONFIGURATION_DEFAULT'
+DELETE FROM [dbo].ResultCodeMaster WHERE ResultCode = @ResultCode;
+DELETE FROM [dbo].Resources WHERE Id = @ResourceId;
+DELETE FROM [dbo].ResourceMasters WHERE Id = @ResourceId;
+
+
+SELECT @ResultCode = 655378, @ResourceId = 'MSG_SIGNATURE_FLOW_CONFIGURATION_DEFAULT_NONE'
+DELETE FROM [dbo].ResultCodeMaster WHERE ResultCode = @ResultCode;
+DELETE FROM [dbo].Resources WHERE Id = @ResourceId;
+DELETE FROM [dbo].ResourceMasters WHERE Id = @ResourceId;
+
+
+SELECT @ResultCode = 655379, @ResourceId = 'MSG_LANDING_VIEW_CONFIGURATION_SELECT_COLUMN'
+DELETE FROM [dbo].ResultCodeMaster WHERE ResultCode = @ResultCode;
+DELETE FROM [dbo].Resources WHERE Id = @ResourceId;
+DELETE FROM [dbo].ResourceMasters WHERE Id = @ResourceId;
+
+
+SELECT @ResultCode = 655380, @ResourceId = 'MSG_LAUNCH_SMTP_SETTING'
+DELETE FROM [dbo].ResultCodeMaster WHERE ResultCode = @ResultCode;
+DELETE FROM [dbo].Resources WHERE Id = @ResourceId;
+DELETE FROM [dbo].ResourceMasters WHERE Id = @ResourceId;
+
+
+SELECT @ResultCode = 655381, @ResourceId = 'MSG_SEND_MAIL_SUCCESS'
+DELETE FROM [dbo].ResultCodeMaster WHERE ResultCode = @ResultCode;
+DELETE FROM [dbo].Resources WHERE Id = @ResourceId;
+DELETE FROM [dbo].ResourceMasters WHERE Id = @ResourceId;
+
+
+SELECT @ResultCode = 655382, @ResourceId = 'MSG_SEND_MAIL_FAILURE'
+DELETE FROM [dbo].ResultCodeMaster WHERE ResultCode = @ResultCode;
+DELETE FROM [dbo].Resources WHERE Id = @ResourceId;
+DELETE FROM [dbo].ResourceMasters WHERE Id = @ResourceId;
+
+
+SELECT @ResultCode = 655383, @ResourceId = 'MSG_LAUNCH_SIGNATURE_TASK_LIST'
+DELETE FROM [dbo].ResultCodeMaster WHERE ResultCode = @ResultCode;
+DELETE FROM [dbo].Resources WHERE Id = @ResourceId;
+DELETE FROM [dbo].ResourceMasters WHERE Id = @ResourceId;
+
+
+SELECT @ResultCode = 655384, @ResourceId = 'MSG_CITE_SIGNATURE_CLICK'
+DELETE FROM [dbo].ResultCodeMaster WHERE ResultCode = @ResultCode;
+DELETE FROM [dbo].Resources WHERE Id = @ResourceId;
+DELETE FROM [dbo].ResourceMasters WHERE Id = @ResourceId;
+
+
+SELECT @ResultCode = 655385, @ResourceId = 'MSG_UPDATE_SMTP_SETTING'
+DELETE FROM [dbo].ResultCodeMaster WHERE ResultCode = @ResultCode;
+DELETE FROM [dbo].Resources WHERE Id = @ResourceId;
+DELETE FROM [dbo].ResourceMasters WHERE Id = @ResourceId;
+
+
+
+SELECT @ResultCode = 655386, @ResourceId = 'MSG_FINISH_SMTP_SETTING'
+DELETE FROM [dbo].ResultCodeMaster WHERE ResultCode = @ResultCode;
+DELETE FROM [dbo].Resources WHERE Id = @ResourceId;
+DELETE FROM [dbo].ResourceMasters WHERE Id = @ResourceId;
+
+------- Only Resource Id ---
+
+SELECT @ResourceId = 'CHG_SIGNATURE_CONFIGURATION_TITLE'
+DELETE FROM [dbo].Resources WHERE Id = @ResourceId;
+DELETE FROM [dbo].ResourceMasters WHERE Id = @ResourceId;
+
+SELECT @ResourceId = 'CHG_SIGNATURE_CONFIGURATION_COMMENT'
+DELETE FROM [dbo].Resources WHERE Id = @ResourceId;
+DELETE FROM [dbo].ResourceMasters WHERE Id = @ResourceId;
+
+SELECT @ResourceId = 'CHG_SIGNATURE_CONFIGURATION_REQ_USER_ID'
+DELETE FROM [dbo].Resources WHERE Id = @ResourceId;
+DELETE FROM [dbo].ResourceMasters WHERE Id = @ResourceId;
+
+SELECT @ResourceId = 'CHG_SIGNATURE_CONFIGURATION_REQ_USER_PASSWORD'
+DELETE FROM [dbo].Resources WHERE Id = @ResourceId;
+DELETE FROM [dbo].ResourceMasters WHERE Id = @ResourceId;
+
+SELECT @ResourceId = 'CHG_SIGNATURE_CONFIGURATION_REQ_USER_COMMENT'
+DELETE FROM [dbo].Resources WHERE Id = @ResourceId;
+DELETE FROM [dbo].ResourceMasters WHERE Id = @ResourceId;
+
+SELECT @ResourceId = 'CHG_SIGNATURE_CONFIGURATION_REST_USER_SIGN'
+DELETE FROM [dbo].Resources WHERE Id = @ResourceId;
+DELETE FROM [dbo].ResourceMasters WHERE Id = @ResourceId;
+
+SELECT @ResourceId = 'CHG_SIGNATURE_CONFIGURATION_REST_FILE_SIGN'
+DELETE FROM [dbo].Resources WHERE Id = @ResourceId;
+DELETE FROM [dbo].ResourceMasters WHERE Id = @ResourceId;
+
+SELECT @ResourceId = 'CHG_SIGNATURE_CONFIGURATION_ACCEPT_SIGNATURE_ONLY_ONCE'
+DELETE FROM [dbo].Resources WHERE Id = @ResourceId;
+DELETE FROM [dbo].ResourceMasters WHERE Id = @ResourceId;
+
+SELECT @ResourceId = 'CHG_SIGNATURE_CONFIGURATION_STATUS_UPDATE'
+DELETE FROM [dbo].Resources WHERE Id = @ResourceId;
+DELETE FROM [dbo].ResourceMasters WHERE Id = @ResourceId;
+
+SELECT @ResourceId = 'CHG_SIGNATURE_CONFIGURATION_FILE_LOCK'
+DELETE FROM [dbo].Resources WHERE Id = @ResourceId;
+DELETE FROM [dbo].ResourceMasters WHERE Id = @ResourceId;
+
+SELECT @ResourceId = 'CHG_SIGNATURE_CONFIGURATION_SIGN_LEVEL'
+DELETE FROM [dbo].Resources WHERE Id = @ResourceId;
+DELETE FROM [dbo].ResourceMasters WHERE Id = @ResourceId;
+
+SELECT @ResourceId = 'CHG_SIGNATURE_CONFIGURATION_SIGN_MEANING'
+DELETE FROM [dbo].Resources WHERE Id = @ResourceId;
+DELETE FROM [dbo].ResourceMasters WHERE Id = @ResourceId;
+
+SELECT @ResourceId = 'CHG_SIGNATURE_CONFIGURATION_PRESET_USER_COMMENT'
+DELETE FROM [dbo].Resources WHERE Id = @ResourceId;
+DELETE FROM [dbo].ResourceMasters WHERE Id = @ResourceId;
+
+SELECT @ResourceId = 'CHG_SIGNATURE_CONFIGURATION_SIGNER'
+DELETE FROM [dbo].Resources WHERE Id = @ResourceId;
+DELETE FROM [dbo].ResourceMasters WHERE Id = @ResourceId;
+
+SELECT @ResourceId = 'CHG_SIGNATURE_TITLE'
+DELETE FROM [dbo].Resources WHERE Id = @ResourceId;
+DELETE FROM [dbo].ResourceMasters WHERE Id = @ResourceId;
+
+SELECT @ResourceId = 'CHG_SIGNATURE_FLOW'
+DELETE FROM [dbo].Resources WHERE Id = @ResourceId;
+DELETE FROM [dbo].ResourceMasters WHERE Id = @ResourceId;
+
+SELECT @ResourceId = 'CHG_SIGNATURE_COMMENT'
+DELETE FROM [dbo].Resources WHERE Id = @ResourceId;
+DELETE FROM [dbo].ResourceMasters WHERE Id = @ResourceId;
+
+SELECT @ResourceId = 'CHG_SIGNATURE_STATUS'
+DELETE FROM [dbo].Resources WHERE Id = @ResourceId;
+DELETE FROM [dbo].ResourceMasters WHERE Id = @ResourceId;
+
+SELECT @ResourceId = 'CHG_SIGNATURE_FILE'
+DELETE FROM [dbo].Resources WHERE Id = @ResourceId;
+DELETE FROM [dbo].ResourceMasters WHERE Id = @ResourceId;
+
+SELECT @ResourceId = 'CHG_LANDING_VIEW_CONFIGURATION_SELECT_COLUMN'
+DELETE FROM [dbo].Resources WHERE Id = @ResourceId;
+DELETE FROM [dbo].ResourceMasters WHERE Id = @ResourceId;
+
