@@ -20,3 +20,5 @@ string.Join("\\", path.Split('\\').Reverse().Skip(1).Reverse());
 https://github.com/ShimadzuCorp/Bridge.Signature/commits/development/.github/workflows/unit-test-esignature-service.yml
 
 "json.schemaDownload.enable": true,
+
+ window.open(url, '_blank', 'noopener,noreferrer');
