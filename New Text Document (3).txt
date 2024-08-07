@@ -22,3 +22,6 @@ https://github.com/ShimadzuCorp/Bridge.Signature/commits/development/.github/wor
 "json.schemaDownload.enable": true,
 
  window.open(url, '_blank', 'noopener,noreferrer');
+
+Ver. : バージョン番号
+File path : ファイルパス
