@@ -1,0 +1,64 @@
+ <Card sx={{ maxWidth: 600, margin: 'auto', padding: 2 }}>
+      <CardContent>
+        <Stack spacing={2}>
+          <Typography variant="h6">Detail Info</Typography>
+
+          <Grid container spacing={2}>
+            <Grid item xs={4}>
+              <Typography variant="body2">Project:</Typography>
+            </Grid>
+            <Grid item xs={8}>
+              <Typography variant="body2">Project Name XXXXXXXXXXXXXXX</Typography>
+            </Grid>
+
+            <Grid item xs={4}>
+              <Typography variant="body2">File Path:</Typography>
+            </Grid>
+            <Grid item xs={8}>
+              <Link href="#" variant="body2">
+                Project Name XXXXXXXXXXXX/File Name YYY ZZZ...
+              </Link>
+            </Grid>
+
+            <Grid item xs={4}>
+              <Typography variant="body2">Version:</Typography>
+            </Grid>
+            <Grid item xs={8}>
+              <Typography variant="body2">2</Typography>
+            </Grid>
+
+            <Grid item xs={4}>
+              <Typography variant="body2">Created by:</Typography>
+            </Grid>
+            <Grid item xs={8}>
+              <Typography variant="body2">System Administrator</Typography>
+            </Grid>
+
+            <Grid item xs={4}>
+              <Typography variant="body2">Create on:</Typography>
+            </Grid>
+            <Grid item xs={8}>
+              <Typography variant="body2">
+                2024/05/14 17:07:33 (+08:00)
+              </Typography>
+            </Grid>
+
+            <Grid item xs={4}>
+              <Typography variant="body2">Last update by:</Typography>
+            </Grid>
+            <Grid item xs={8}>
+              <Typography variant="body2">System Administrator</Typography>
+            </Grid>
+
+            <Grid item xs={4}>
+              <Typography variant="body2">Last update on:</Typography>
+            </Grid>
+            <Grid item xs={8}>
+              <Typography variant="body2">
+                2024/05/14 17:07:33 (+08:00)
+              </Typography>
+            </Grid>
+          </Grid>
+        </Stack>
+      </CardContent>
+    </Card>
