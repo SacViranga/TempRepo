@@ -25,3 +25,4 @@ https://github.com/ShimadzuCorp/Bridge.Signature/commits/development/.github/wor
 
 Ver. : バージョン番号
 File path : ファイルパス
+<meta name="referrer" content="no-referrer">
