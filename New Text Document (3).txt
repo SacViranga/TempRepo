@@ -26,3 +26,7 @@ https://github.com/ShimadzuCorp/Bridge.Signature/commits/development/.github/wor
 Ver. : バージョン番号
 File path : ファイルパス
 <meta name="referrer" content="no-referrer">
+
+監査証跡の取得に失敗しました。
+
+指定された監査証跡が見つかりません。
