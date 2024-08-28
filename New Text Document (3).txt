@@ -21,7 +21,9 @@ https://github.com/ShimadzuCorp/Bridge.Signature/commits/development/.github/wor
 
 "json.schemaDownload.enable": true,
 
-署名タスクリスト
+Return By -> 差し戻し担当者
+Return On -> 差し戻し日時
+ 
 
  window.open(url, '_blank', 'noopener,noreferrer');
 
