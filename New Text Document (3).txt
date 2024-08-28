@@ -21,6 +21,8 @@ https://github.com/ShimadzuCorp/Bridge.Signature/commits/development/.github/wor
 
 "json.schemaDownload.enable": true,
 
+署名タスクリスト
+
  window.open(url, '_blank', 'noopener,noreferrer');
 
 public class NotNullOrEmptyAttribute : ValidationAttribute
