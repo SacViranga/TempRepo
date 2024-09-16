@@ -23,7 +23,7 @@ const PdfViewer = ({ base64 }) => {
     }, [base64]);
 
     return (
-        <div style={{ height: '750px', width: '100%' }}>
+        <div style={{ height: '750px', width: '100%', overflow: 'auto' }}>
             {pdfUrl ? (
                 <Worker workerUrl={`https://unpkg.com/pdfjs-dist@2.6.347/build/pdf.worker.min.js`}>
                     <Viewer fileUrl={pdfUrl} />
