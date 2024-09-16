@@ -1,0 +1,38 @@
+import React, { useState, useEffect } from 'react';
+import { Worker, Viewer } from '@react-pdf-viewer/core'; // PDF viewer
+import '@react-pdf-viewer/core/lib/styles/index.css'; // Import the CSS file for the viewer
+
+const PdfViewer = ({ base64 }) => {
+    const [pdfUrl, setPdfUrl] = useState(null);
+
+    useEffect(() => {
+        // Convert base64 to Blob and create URL
+        const byteCharacters = atob(base64);
+        const byteNumbers = new Array(byteCharacters.length);
+        for (let i = 0; i < byteCharacters.length; i++) {
+            byteNumbers[i] = byteCharacters.charCodeAt(i);
+        }
+        const byteArray = new Uint8Array(byteNumbers);
+        const blob = new Blob([byteArray], { type: 'application/pdf' });
+        const url = URL.createObjectURL(blob);
+
+        setPdfUrl(url);
+
+        // Cleanup URL object
+        return () => URL.revokeObjectURL(url);
+    }, [base64]);
+
+    return (
+        <div style={{ height: '750px', width: '100%' }}>
+            {pdfUrl ? (
+                <Worker workerUrl={`https://unpkg.com/pdfjs-dist@2.6.347/build/pdf.worker.min.js`}>
+                    <Viewer fileUrl={pdfUrl} />
+                </Worker>
+            ) : (
+                <div>Loading PDF...</div>
+            )}
+        </div>
+    );
+};
+
+export default PdfViewer;
