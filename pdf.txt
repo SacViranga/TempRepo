@@ -4,6 +4,7 @@ import '@react-pdf-viewer/core/lib/styles/index.css'; // Import the CSS file for
 
 const PdfViewer = ({ base64 }) => {
     const [pdfUrl, setPdfUrl] = useState(null);
+    const [viewerWidth, setViewerWidth] = useState(window.innerWidth);
 
     useEffect(() => {
         // Convert base64 to Blob and create URL
@@ -21,6 +22,18 @@ const PdfViewer = ({ base64 }) => {
         // Cleanup URL object
         return () => URL.revokeObjectURL(url);
     }, [base64]);
+
+    // Handle window resize
+    useEffect(() => {
+        const handleResize = () => {
+            setViewerWidth(window.innerWidth); // Update width based on window size
+        };
+
+        window.addEventListener('resize', handleResize);
+
+        // Cleanup the event listener on component unmount
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
 
     return (
         <div style={{ height: '750px', width: '100%', overflow: 'auto' }}>
