@@ -40,3 +40,5 @@ public class NotNullOrEmptyAttribute : ValidationAttribute
         return ValidationResult.Success;
     }
 }
+
+未選択
