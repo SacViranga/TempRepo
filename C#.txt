@@ -1,0 +1,4 @@
+public static T DeepCopy<T>(this T source)
+{
+    return source == null ? default : JsonSerializer.Parse<T>(JsonSerializer.ToString(source));
+}
