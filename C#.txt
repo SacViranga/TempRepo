@@ -2,3 +2,11 @@ public static T DeepCopy<T>(this T source)
 {
     return source == null ? default : JsonSerializer.Parse<T>(JsonSerializer.ToString(source));
 }
+
+
+using Newtonsoft.Json;
+
+public static T DeepCopy<T>(this T source)
+{
+    return (T)JsonConvert.DeserializeObject(JsonConvert.SerializeObject(source), source.GetType());
+}
