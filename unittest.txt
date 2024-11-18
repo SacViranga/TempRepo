@@ -1,49 +1,66 @@
-public DrawOnEditTests()
+using Xunit;
+using Moq;
+using System;
+using System.Collections.Generic;
+using System.Data;
+
+public class CompoundTableReportItemTests
+{
+    private readonly Mock<ILogger> _mockLogger;
+    private readonly CompoundTableReportItem _sut; // System Under Test (SUT)
+
+    public CompoundTableReportItemTests()
     {
         _mockLogger = new Mock<ILogger>();
-        _sut = new MyClass(_mockLogger.Object); // Inject mocked logger into the system under test (SUT)
+        _sut = new CompoundTableReportItem(_mockLogger.Object);
     }
 
     [Fact]
-    public void DrawOnEdit_WhenDataIsEmpty_ReturnsNoData()
+    public void DeserializeConfiguration_ShouldReturnCompoundTableReportItemConfiguration()
     {
         // Arrange
-        var reportItemConfiguration = new CellExpandingReportItemConfiguration();
-        var dataSet = new DataSet();
-
-        // Mock data to simulate empty data
-        _sut.SetData(new DummyData { IsEmpty = true }); // Replace SetData with the actual way to set mock data
+        var bytes = new ReadOnlyMemory<byte>(new byte[] { 0x01, 0x02, 0x03 });
 
         // Act
-        var result = _sut.DrawOnEdit(reportItemConfiguration, dataSet);
+        var result = _sut.DeserializeConfiguration(bytes);
+
+        // Assert
+        _mockLogger.Verify(logger => logger.Information("DeserializeConfiguration start"), Times.Once);
+        Assert.NotNull(result);
+        Assert.IsType<CompoundTableReportItemConfiguration>(result);
+    }
+
+    [Fact]
+    public void DrawOnEdit_WithEmptyData_ShouldReturnNoData()
+    {
+        // Arrange
+        var config = new CellExpandingReportItemConfiguration();
+        var dataSet = new DataSet();
+        _sut.SetDummyData(CreateEmptyDummyData());
+
+        // Act
+        var result = _sut.DrawOnEdit(config, dataSet);
 
         // Assert
         _mockLogger.Verify(logger => logger.Information("DrawOnEdit start"), Times.Once);
         _mockLogger.Verify(logger => logger.Information("DrawOnEdit End"), Times.Once);
+
         Assert.NotNull(result);
-        Assert.Equal(_sut.DrawNoData(), result);
+        Assert.Equal(6, result.Rows.Count); // 1 header + 5 "No Data" rows
+        Assert.All(result.Rows[1], cell => Assert.Equal("#N/A", cell.Value));
     }
 
     [Fact]
-    public void DrawOnEdit_WithValidData_ReturnsExpectedRows()
+    public void DrawOnEdit_WithValidData_ShouldReturnExpectedRows()
     {
         // Arrange
-        var reportItemConfiguration = new CellExpandingReportItemConfiguration();
+        var config = new CellExpandingReportItemConfiguration();
         var dataSet = new DataSet();
-        var dummyData = new DummyData
-        {
-            IsEmpty = false,
-            Items = new List<SomeDataItem>
-            {
-                new SomeDataItem { Value = "Row1" },
-                new SomeDataItem { Value = "Row2" }
-            }
-        };
-
-        _sut.SetData(dummyData); // Replace SetData with the actual way to inject mock data
+        var dummyData = CreateDummyDataWith5Records();
+        _sut.SetDummyData(dummyData);
 
         // Act
-        var result = _sut.DrawOnEdit(reportItemConfiguration, dataSet);
+        var result = _sut.DrawOnEdit(config, dataSet);
 
         // Assert
         _mockLogger.Verify(logger => logger.Information("DrawOnEdit start"), Times.Once);
@@ -51,7 +68,50 @@ public DrawOnEditTests()
 
         Assert.NotNull(result);
         Assert.Equal(6, result.Rows.Count); // 1 header + 5 rows
-        Assert.Equal("Row1", result.Rows[1][0].Value); // Assuming first column holds the data
-        Assert.Equal("Row2", result.Rows[2][0].Value);
+        Assert.Equal("1", result.Rows[1][0].Value); // First cell in first data row
+        Assert.Equal("CompA", result.Rows[1][7].Value); // Last cell in first data row
+    }
+
+    [Fact]
+    public void DrawOnPrint_WithValidData_ShouldReturnExpectedRows()
+    {
+        // Arrange
+        var config = new CellExpandingReportItemConfiguration();
+        var dataSet = new DataSet();
+
+        // Act
+        var result = _sut.DrawOnPrint(config, dataSet);
+
+        // Assert
+        _mockLogger.Verify(logger => logger.Information("DrawOnPrint Start"), Times.Once);
+        _mockLogger.Verify(logger => logger.Information("DrawOnPrint End"), Times.Once);
+
+        Assert.NotNull(result);
+        Assert.Equal(6, result.Rows.Count); // 1 header + 5 rows
+        Assert.Equal("CompA", result.Rows[1][7].Value); // Last column of the first data row
+    }
+
+    [Fact]
+    public void GetDefaultConfiguration_ShouldReturnDefaultConfiguration()
+    {
+        // Act
+        var result = _sut.GetDefaultConfiguration();
+
+        // Assert
+        _mockLogger.Verify(logger => logger.Information("GetDefaultConfiguration start"), Times.Once);
+        Assert.NotNull(result);
+        Assert.IsType<CompoundTableReportItemConfiguration>(result);
+    }
+
+    [Fact]
+    public void DrawNoData_ShouldReturnExpectedNoDataRows()
+    {
+        // Act
+        var result = CompoundTableReportItem.DrawNoData();
+
+        // Assert
+        Assert.NotNull(result);
+        Assert.Equal(6, result.Rows.Count); // 1 header + 5 rows of NoDataRow
+        Assert.All(result.Rows[1], cell => Assert.Equal("#N/A", cell.Value));
     }
 }
