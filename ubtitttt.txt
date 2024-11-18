@@ -1,0 +1,65 @@
+[Fact]
+public void DeserializeConfiguration_ShouldReturnValidConfiguration()
+{
+    // Arrange
+    var bytes = new ReadOnlyMemory<byte>(new byte[] { 0x01, 0x02, 0x03 });
+    var loggerMock = new Mock<ILogger>();
+    var sut = new CompoundTableReportItem(loggerMock.Object);
+
+    // Act
+    var result = sut.DeserializeConfiguration(bytes);
+
+    // Assert
+    loggerMock.Verify(logger => logger.Information("DeserializeConfiguration start"), Times.Once);
+    Assert.NotNull(result);
+    Assert.IsType<CompoundTableReportItemConfiguration>(result);
+}
+
+
+[Fact]
+public void DrawOnEdit_WhenDataIsEmpty_ShouldReturnNoData()
+{
+    // Arrange
+    var loggerMock = new Mock<ILogger>();
+    var sut = new CompoundTableReportItem(loggerMock.Object);
+    var config = new CellExpandingReportItemConfiguration();
+    var dataSet = new DataSet();
+
+    // Simulate empty dummy data
+    var dummyData = new DummyCompoundTableData(new List<DummyCompoundTableItem>());
+    sut.SetDummyData(dummyData); // Assume `SetDummyData` injects mock data
+
+    // Act
+    var result = sut.DrawOnEdit(config, dataSet);
+
+    // Assert
+    loggerMock.Verify(logger => logger.Information("DrawOnEdit start"), Times.Once);
+    loggerMock.Verify(logger => logger.Information("DrawOnEdit End"), Times.Once);
+
+    Assert.NotNull(result);
+    Assert.Equal(6, result.Rows.Count); // Header + 5 rows of NoDataRow
+    Assert.All(result.Rows[1], cell => Assert.Equal("#N/A", cell.Value));
+}
+
+
+[Fact]
+public void DrawOnPrint_WithValidData_ShouldReturnCorrectRows()
+{
+    // Arrange
+    var loggerMock = new Mock<ILogger>();
+    var sut = new CompoundTableReportItem(loggerMock.Object);
+    var config = new CellExpandingReportItemConfiguration();
+    var dataSet = new DataSet();
+
+    // Act
+    var result = sut.DrawOnPrint(config, dataSet);
+
+    // Assert
+    loggerMock.Verify(logger => logger.Information("DrawOnPrint Start"), Times.Once);
+    loggerMock.Verify(logger => logger.Information("DrawOnPrint End"), Times.Once);
+
+    Assert.NotNull(result);
+    Assert.Equal(6, result.Rows.Count); // 1 header + 5 data rows
+    Assert.Equal("CompA", result.Rows[1][7].Value); // Compound name of first row
+    Assert.Equal("mg/L", result.Rows[1][5].Value); // Concentration unit of first row
+}
