@@ -1,0 +1,57 @@
+public DrawOnEditTests()
+    {
+        _mockLogger = new Mock<ILogger>();
+        _sut = new MyClass(_mockLogger.Object); // Inject mocked logger into the system under test (SUT)
+    }
+
+    [Fact]
+    public void DrawOnEdit_WhenDataIsEmpty_ReturnsNoData()
+    {
+        // Arrange
+        var reportItemConfiguration = new CellExpandingReportItemConfiguration();
+        var dataSet = new DataSet();
+
+        // Mock data to simulate empty data
+        _sut.SetData(new DummyData { IsEmpty = true }); // Replace SetData with the actual way to set mock data
+
+        // Act
+        var result = _sut.DrawOnEdit(reportItemConfiguration, dataSet);
+
+        // Assert
+        _mockLogger.Verify(logger => logger.Information("DrawOnEdit start"), Times.Once);
+        _mockLogger.Verify(logger => logger.Information("DrawOnEdit End"), Times.Once);
+        Assert.NotNull(result);
+        Assert.Equal(_sut.DrawNoData(), result);
+    }
+
+    [Fact]
+    public void DrawOnEdit_WithValidData_ReturnsExpectedRows()
+    {
+        // Arrange
+        var reportItemConfiguration = new CellExpandingReportItemConfiguration();
+        var dataSet = new DataSet();
+        var dummyData = new DummyData
+        {
+            IsEmpty = false,
+            Items = new List<SomeDataItem>
+            {
+                new SomeDataItem { Value = "Row1" },
+                new SomeDataItem { Value = "Row2" }
+            }
+        };
+
+        _sut.SetData(dummyData); // Replace SetData with the actual way to inject mock data
+
+        // Act
+        var result = _sut.DrawOnEdit(reportItemConfiguration, dataSet);
+
+        // Assert
+        _mockLogger.Verify(logger => logger.Information("DrawOnEdit start"), Times.Once);
+        _mockLogger.Verify(logger => logger.Information("DrawOnEdit End"), Times.Once);
+
+        Assert.NotNull(result);
+        Assert.Equal(6, result.Rows.Count); // 1 header + 5 rows
+        Assert.Equal("Row1", result.Rows[1][0].Value); // Assuming first column holds the data
+        Assert.Equal("Row2", result.Rows[2][0].Value);
+    }
+}
