@@ -1,0 +1,22 @@
+    private void WriteToEventLog(string message, EventLogEntryType entryType)
+    {
+        string source = "SampleInformationReportItemPlugin";
+        string log = "Application"; // Logs to the "Application" section in Event Viewer
+
+        try
+        {
+            // Check if the event source exists; if not, create it
+            if (!EventLog.SourceExists(source))
+            {
+                EventLog.CreateEventSource(source, log);
+            }
+
+            // Write to the event log
+            EventLog.WriteEntry(source, message, entryType);
+        }
+        catch (Exception e)
+        {
+            // Handle errors related to writing to the Event Log
+            Console.WriteLine($"Failed to write to event log: {e.Message}");
+        }
+    }
