@@ -1,0 +1,14 @@
+Below the code to run Code coverage in your mechine.
+
+#Install reportgenerator if not available
+dotnet tool install --global dotnet-reportgenerator-globaltool --version 4.6.1
+dotnet tool install --global coverlet.console
+
+e:
+
+#Method by go to specific project folrder
+cd E:\bridge-app-report-items-mindteck\dev\src\TestProject\Shimadzu.Bridge.ReportItem.Method.Test
+dotnet add package coverlet.msbuild
+dotnet test --collect:"XPlat Code Coverage" 
+reportgenerator -reports:"TestResults\*\coverage.cobertura.xml" -targetdir:"coveragereport" -reporttypes:Html
+rm TestResults -r -force
