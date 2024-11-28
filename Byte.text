@@ -1,0 +1,46 @@
+using System;
+using System.Collections.Generic;
+using System.Text.Json;
+
+public record RecordClass(int Id, string Name);
+
+class Program
+{
+    static void Main()
+    {
+        // Example List<RecordClass>
+        List<RecordClass> recordList = new List<RecordClass>
+        {
+            new RecordClass(1, "Alice"),
+            new RecordClass(2, "Bob"),
+            new RecordClass(3, "Charlie")
+        };
+
+        // Serialize each RecordClass into a JSON byte array and combine them
+        byte[] combinedBytes = SerializeListToBytes(recordList);
+
+        // Convert to ReadOnlyMemory<byte>
+        ReadOnlyMemory<byte> readOnlyMemory = new ReadOnlyMemory<byte>(combinedBytes);
+
+        // Print the serialized data as a string for verification
+        Console.WriteLine(System.Text.Encoding.UTF8.GetString(readOnlyMemory.Span));
+    }
+
+    static byte[] SerializeListToBytes(List<RecordClass> recordList)
+    {
+        // Serialize each record into JSON and combine into a single byte array
+        List<byte> byteList = new List<byte>();
+
+        foreach (var record in recordList)
+        {
+            // Serialize to JSON bytes
+            byte[] serializedRecord = JsonSerializer.SerializeToUtf8Bytes(record);
+
+            // Optionally add a delimiter (e.g., newline) between records
+            byteList.AddRange(serializedRecord);
+            byteList.Add((byte)'\n'); // Add a newline as a delimiter
+        }
+
+        return byteList.ToArray();
+    }
+}
