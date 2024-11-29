@@ -1,0 +1,43 @@
+using System;
+using System.Collections.Generic;
+using System.Text.Json;
+
+public record RecordClass(int Id, string Name);
+
+class Program
+{
+    static void Main()
+    {
+        // Example serialized data in JSON format
+        var recordList = new List<RecordClass>
+        {
+            new RecordClass(1, "Alice"),
+            new RecordClass(2, "Bob")
+        };
+
+        // Serialize to ReadOnlyMemory<byte>
+        byte[] serializedBytes = SerializeListToBytes(recordList);
+        ReadOnlyMemory<byte> readOnlyMemory = new ReadOnlyMemory<byte>(serializedBytes);
+
+        // Deserialize back into List<RecordClass>
+        List<RecordClass> deserializedList = DeserializeBytesToList(readOnlyMemory);
+
+        // Print the deserialized list
+        foreach (var record in deserializedList)
+        {
+            Console.WriteLine($"Id: {record.Id}, Name: {record.Name}");
+        }
+    }
+
+    static byte[] SerializeListToBytes(List<RecordClass> recordList)
+    {
+        return JsonSerializer.SerializeToUtf8Bytes(recordList);
+    }
+
+    static List<RecordClass> DeserializeBytesToList(ReadOnlyMemory<byte> memory)
+    {
+        // Deserialize JSON data from ReadOnlyMemory<byte> back into a list
+        return JsonSerializer.Deserialize<List<RecordClass>>(memory.Span)
+               ?? new List<RecordClass>();
+    }
+}
