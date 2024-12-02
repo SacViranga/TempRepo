@@ -1,0 +1,5 @@
+ static T DeserializeProtobufData<T>(ReadOnlyMemory<byte> data) where T : IMessage<T>, new()
+    {
+        var parser = new MessageParser<T>(() => new T());
+        return parser.ParseFrom(data.Span);
+    }
