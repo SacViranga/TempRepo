@@ -1,0 +1,88 @@
+using Xunit;
+using Moq;
+using System.Collections.Generic;
+using System.ComponentModel;
+
+namespace YourNamespace.Tests
+{
+    public class SampleInformationReportItemConfigurationControlUIServiceTests
+    {
+        private readonly Mock<ILogger> _mockLogger;
+        private readonly Mock<SampleInformationReportItemContext> _mockContext;
+        private readonly SampleInformationReportItemConfigurationControlUIService _service;
+        private readonly SampleInformationConfiguration _sampleInformationConfiguration;
+
+        public SampleInformationReportItemConfigurationControlUIServiceTests()
+        {
+            // Mock Logger
+            _mockLogger = new Mock<ILogger>();
+
+            // Mock SampleInformationConfiguration
+            _sampleInformationConfiguration = new SampleInformationConfiguration
+            {
+                Properties = new List<SampleInformationProperty>
+                {
+                    new SampleInformationProperty { PropertyId = 1, DefaultValue = SampleInformationItemStatusModel.Hide },
+                    new SampleInformationProperty { PropertyId = 2, DefaultValue = SampleInformationItemStatusModel.Hide }
+                }
+            };
+
+            // Mock Context
+            _mockContext = new Mock<SampleInformationReportItemContext>(
+                new CellExpandingListCommonConfiguration(),
+                new ReportItemConfiguration(),
+                _mockLogger.Object
+            );
+
+            _mockContext.Setup(c => c.SampleInformationReportItemConfigurationData)
+                        .Returns(new SampleInformationReportItemConfigurationData
+                        {
+                            SampleInformationConfiguration = _sampleInformationConfiguration
+                        });
+
+            _mockContext.Setup(c => c.GetConfiguration())
+                        .Returns(new ReportItemConfiguration());
+
+            // Create Service
+            _service = new SampleInformationReportItemConfigurationControlUIService(_mockLogger.Object, _mockContext.Object);
+        }
+
+        [Fact]
+        public void AddSelectedItems_ShouldUpdateDisplayAndHiddenItemsCorrectly()
+        {
+            // Arrange: Prepare selectedItems, displayItems, and hiddenItems
+            var selectedItems = new List<SampleInformationItem>
+            {
+                new SampleInformationItem { Id = 1, DefaultValue = SampleInformationItemStatusModel.Hide },
+                new SampleInformationItem { Id = 2, DefaultValue = SampleInformationItemStatusModel.Hide }
+            };
+
+            var displayItems = new BindingList<SampleInformationItem>();
+            var hiddenItems = new BindingList<SampleInformationItem>
+            {
+                new SampleInformationItem { Id = 1, DefaultValue = SampleInformationItemStatusModel.Hide },
+                new SampleInformationItem { Id = 2, DefaultValue = SampleInformationItemStatusModel.Hide }
+            };
+
+            // Act: Call AddSelectedItems
+            _service.AddSelectedItems(selectedItems, displayItems, hiddenItems);
+
+            // Assert: Validate that displayItems and hiddenItems are updated correctly
+            Assert.Equal(2, displayItems.Count); // All selected items should now be in displayItems
+            Assert.Empty(hiddenItems);          // All selected items should have been removed from hiddenItems
+
+            Assert.Contains(displayItems, i => i.Id == 1 && i.DefaultValue == SampleInformationItemStatusModel.Display);
+            Assert.Contains(displayItems, i => i.Id == 2 && i.DefaultValue == SampleInformationItemStatusModel.Display);
+
+            // Assert: Validate that SampleInformationConfiguration.Properties is updated
+            Assert.All(_sampleInformationConfiguration.Properties, p =>
+            {
+                Assert.Equal(SampleInformationItemStatusModel.Display, p.DefaultValue);
+            });
+
+            // Verify Logger Calls
+            _mockLogger.Verify(l => l.Information("SampleInformationReportItemConfigurationControlUIService AddSelectedList Start"), Times.Once);
+            _mockLogger.Verify(l => l.Information("SampleInformationReportItemConfigurationControlUIService AddSelectedList End"), Times.Once);
+        }
+    }
+}
