@@ -41,4 +41,8 @@ public class NotNullOrEmptyAttribute : ValidationAttribute
     }
 }
 
-未選択
+var filteredList = listOfLists
+    .Where(innerList => filterList
+        .Any(filter => innerList.FirstOrDefault()?.StartsWith(filter) == true))
+    .ToList();
+
