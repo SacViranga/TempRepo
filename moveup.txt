@@ -1,0 +1,37 @@
+private void btnMoveUp_Click(object sender, EventArgs e)
+{
+    int selectedIndex = listBox1.SelectedIndex;
+    if (selectedIndex > 0) // Ensure the item is not the first one
+    {
+        // Get the selected item
+        var selectedItem = listBox1.SelectedItem;
+
+        // Remove it from the current position
+        listBox1.Items.RemoveAt(selectedIndex);
+
+        // Insert it at the new position
+        listBox1.Items.Insert(selectedIndex - 1, selectedItem);
+
+        // Restore the selection
+        listBox1.SelectedIndex = selectedIndex - 1;
+    }
+}
+
+private void btnMoveDown_Click(object sender, EventArgs e)
+{
+    int selectedIndex = listBox1.SelectedIndex;
+    if (selectedIndex < listBox1.Items.Count - 1 && selectedIndex != -1) // Ensure the item is not the last one
+    {
+        // Get the selected item
+        var selectedItem = listBox1.SelectedItem;
+
+        // Remove it from the current position
+        listBox1.Items.RemoveAt(selectedIndex);
+
+        // Insert it at the new position
+        listBox1.Items.Insert(selectedIndex + 1, selectedItem);
+
+        // Restore the selection
+        listBox1.SelectedIndex = selectedIndex + 1;
+    }
+}
