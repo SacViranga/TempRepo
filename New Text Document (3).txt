@@ -46,3 +46,17 @@ var filteredList = listOfLists
         .Any(filter => innerList.FirstOrDefault()?.StartsWith(filter) == true))
     .ToList();
 
+        // Filter and order rows
+        var filteredAndOrderedRows = expectedVisibleItems
+            .Where(config => config.DefaultValue == "Display") // Filter by DefaultValue
+            .OrderBy(config => config.DisplayOrder)             // Order by DisplayOrder
+            .Select(config =>
+            {
+                // Match rows by the DisplayResourceId
+                var matchingRow = rows.FirstOrDefault(row => row[0].TrimEnd(':') == config.DisplayResourceId);
+                return matchingRow != null ? new { config.DisplayOrder, Row = matchingRow } : null;
+            })
+            .Where(item => item != null)
+            .Select(item => item.Row)
+            .ToList();
+
