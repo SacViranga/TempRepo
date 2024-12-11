@@ -1,0 +1,37 @@
+private void UpdateGraphics(ReportItemConfiguration reportItemConfiguration, IEnumerable<DataContainer> dataContainers, Graphics graphics, Rectangle rectangle)
+{
+    if (reportItemConfiguration == null) throw new ArgumentNullException(nameof(reportItemConfiguration));
+    if (dataContainers == null) throw new ArgumentNullException(nameof(dataContainers));
+    if (graphics == null) throw new ArgumentNullException(nameof(graphics));
+
+    // Draw title
+    var yOffset = DrawTitle(graphics, rectangle, _reportTilte);
+
+    // Draw data
+    DrawData(graphics, rectangle, yOffset, reportItemConfiguration, dataContainers);
+}
+
+private int DrawTitle(Graphics graphics, Rectangle rectangle, string title)
+{
+    if (string.IsNullOrEmpty(title)) throw new ArgumentException("Title cannot be null or empty.", nameof(title));
+
+    using var titleFont = new Font(DefaultFontName, DefaultFontSize, FontStyle.Bold);
+    string reportTitle = $"{title}\r\n";
+    SizeF titleSize = graphics.MeasureString(reportTitle, titleFont, rectangle.Width, _titleFormat);
+    Rectangle titleRectangle = new(rectangle.X, rectangle.Y, rectangle.Width, (int)titleSize.Height);
+
+    graphics.DrawString(reportTitle, titleFont, Brushes.Black, titleRectangle, _titleFormat);
+
+    // Return updated Y position
+    return rectangle.Y + (int)titleSize.Height;
+}
+
+private void DrawData(Graphics graphics, Rectangle rectangle, int yOffset, ReportItemConfiguration reportItemConfiguration, IEnumerable<DataContainer> dataContainers)
+{
+    using var dataFont = new Font(DefaultFontName, DefaultFontSize);
+    string data = CreateDisplayData(reportItemConfiguration, dataContainers);
+    SizeF dataSize = graphics.MeasureString(data, dataFont, rectangle.Width, _dummyTextFormat);
+    Rectangle dataRectangle = new(rectangle.X, yOffset, rectangle.Width, (int)dataSize.Height);
+
+    graphics.DrawString(data, dataFont, Brushes.Black, dataRectangle, _dummyTextFormat);
+}
