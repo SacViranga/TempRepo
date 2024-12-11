@@ -1,0 +1,67 @@
+public string GenerateAnalysisMethodReport(IEnumerable<DataContainer> dataContainers)
+{
+    if (dataContainers == null || !dataContainers.Any())
+        return "No data available.";
+
+    var resultBuilder = new StringBuilder();
+
+    // Deserialize the first data container
+    var firstContainer = dataContainers.First();
+    var acquisitionMethod = AnalysisMethodDataManage.DeserializeProtobufData<AcquisitionMethod>(firstContainer.Data);
+
+    // Add Acquisition Method details
+    AppendLine(resultBuilder, $"Analysis Method ID : {acquisitionMethod.AcquisitionMethodId}");
+    AppendLine(resultBuilder, string.Empty);
+
+    // Process each module
+    foreach (var module in acquisitionMethod.Modules)
+    {
+        AppendModuleDetails(resultBuilder, module);
+    }
+
+    return resultBuilder.ToString();
+}
+
+private void AppendModuleDetails(StringBuilder builder, Module module)
+{
+    AppendLine(builder, $"Module Method ID : {module.ModuleMethodId}");
+    AppendLine(builder, $"Module Type : {module.ModuleType}");
+    AppendLine(builder, $"Model Name : {module.ModelName}");
+    AppendLine(builder, $"Vendor Name : {module.VendorName}");
+    AppendLine(builder, string.Empty);
+
+    // Process sections
+    foreach (var section in module.SectionValues.Sections)
+    {
+        AppendSectionDetails(builder, section);
+    }
+}
+
+private void AppendSectionDetails(StringBuilder builder, Section section)
+{
+    AppendLine(builder, $"<< {section.SectionsName} >>");
+
+    // Process section items
+    foreach (var sectionItem in section.Items)
+    {
+        AppendLine(builder, $"{sectionItem.MethodItemName} : {GetValue(sectionItem)}");
+    }
+
+    AppendLine(builder, string.Empty);
+
+    // Process subsections
+    foreach (var subSection in section.SubSections)
+    {
+        AppendLine(builder, $"<< {subSection.SectionsName} >>");
+
+        foreach (var subSectionItem in subSection.Items)
+        {
+            AppendLine(builder, $"{subSectionItem.MethodItemName} : {GetValue(subSectionItem)}");
+        }
+    }
+}
+
+private void AppendLine(StringBuilder builder, string line)
+{
+    builder.AppendLine(line);
+}
