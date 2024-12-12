@@ -1,0 +1,85 @@
+private static void DrawReportOnEdit(
+    ReportItemConfiguration reportItemConfiguration,
+    IEnumerable<DataContainer> dataContainers,
+    Graphics graphics,
+    Rectangle rectangle)
+{
+    using var titleFont = new Font(DefaultFontName, DefaultFontSize, FontStyle.Bold);
+    using var dataFont = new Font(DefaultFontName, DefaultFontSize);
+
+    // Draw Title
+    string reportTitle = $"{_reportTitle}\r\n";
+    SizeF titleSize = graphics.MeasureString(reportTitle, titleFont, rectangle.Width, _titleFormat);
+    graphics.DrawString(reportTitle, titleFont, Brushes.Black, rectangle, _titleFormat);
+
+    int yOffset = rectangle.Y + (int)titleSize.Height;
+
+    // Generate Data Content
+    string data = GenerateReportContent(dataContainers);
+    SizeF dataSize = graphics.MeasureString(data, dataFont, rectangle.Width, _defaultTextFormat);
+
+    // Update total height
+    DefaultSize.Height = (int)(titleSize.Height + dataSize.Height);
+
+    // Handle Content Overflow
+    if (dataSize.Height > rectangle.Height - titleSize.Height)
+    {
+        data = HandleOverflow(data, dataFont, graphics, rectangle, yOffset);
+    }
+
+    // Draw Data
+    RectangleF dataRectangle = new RectangleF(rectangle.X, yOffset, rectangle.Width, rectangle.Height - yOffset);
+    graphics.DrawString(data, dataFont, Brushes.Black, dataRectangle, _defaultTextFormat);
+}
+
+private static string HandleOverflow(
+    string data,
+    Font dataFont,
+    Graphics graphics,
+    Rectangle rectangle,
+    int yOffset)
+{
+    string[] lines = data.Split(new[] { Environment.NewLine }, StringSplitOptions.None);
+    var visibleContent = new StringBuilder();
+    int availableHeight = rectangle.Height - yOffset;
+    float currentHeight = 0;
+
+    foreach (var line in lines)
+    {
+        // Measure line size
+        SizeF lineSize = graphics.MeasureString(line, dataFont, rectangle.Width, _defaultTextFormat);
+        if (currentHeight + lineSize.Height > availableHeight)
+        {
+            break; // Stop adding lines if height exceeds available space
+        }
+
+        // Truncate line if it exceeds width
+        string truncatedLine = TruncateToFit(line, dataFont, graphics, rectangle.Width);
+        visibleContent.AppendLine(truncatedLine);
+        currentHeight += graphics.MeasureString(truncatedLine, dataFont, rectangle.Width, _defaultTextFormat).Height;
+    }
+
+    return visibleContent.ToString();
+}
+
+private static string TruncateToFit(string text, Font font, Graphics graphics, float maxWidth)
+{
+    if (string.IsNullOrEmpty(text))
+        return string.Empty;
+
+    // Check if the full text fits
+    SizeF fullTextSize = graphics.MeasureString(text, font);
+    if (fullTextSize.Width <= maxWidth)
+        return text;
+
+    // Attempt truncation
+    while (text.Length > 0)
+    {
+        text = text.Substring(0, text.Length - 1); // Remove last character
+        SizeF truncatedSize = graphics.MeasureString(text, font);
+        if (truncatedSize.Width <= maxWidth)
+            return text;
+    }
+
+    return string.Empty; // Return empty if even a single character doesn't fit
+}
