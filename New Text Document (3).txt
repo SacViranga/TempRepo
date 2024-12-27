@@ -23,7 +23,8 @@ https://github.com/ShimadzuCorp/Bridge.Signature/commits/development/.github/wor
 
 Return By -> 差し戻し担当者
 Return On -> 差し戻し日時
- 
+
+header - ヘッダー
 
  window.open(url, '_blank', 'noopener,noreferrer');
 
