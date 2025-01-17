@@ -1,0 +1,15 @@
+{
+  "exclude": [
+    "[Shimadzu.Bridge.ReportItem.AcquisitionMethod.Proto.*]*",
+    "[Shimadzu.Bridge.ReportItem.AcquisitionMethod.ListBoxItem]*",
+    "[Shimadzu.Bridge.ReportItem.AcquisitionMethod.Proto.AcquisitionMethodDoubleList]*"
+  ],
+  "excludeByFile": [
+    "**/ListBoxItem.cs"
+  ],
+  "excludeByAttribute": [
+    "CompilerGeneratedAttribute",
+    "GeneratedCodeAttribute",
+    "ExcludeFromCodeCoverageAttribute"
+  ]
+}
