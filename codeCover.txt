@@ -19,3 +19,4 @@ dotnet test --collect:"XPlat Code Coverage" \
   /p:Exclude="[MyApp.Services]*;[MyApp.Utilities]*" \
   /p:ExcludeByFile="**/Services/HelperService.cs;**/Utilities/UtilityHelper.cs"
 
+dotnet test --settings coverlet.settings /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura /p:CoverletOutput=./TestResults/
