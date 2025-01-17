@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8" ?>
 <RunSettings>
   <DataCollectionRunSettings>
     <DataCollectors>
@@ -5,22 +6,27 @@
         <Configuration>
           <Format>cobertura</Format>
           <OutputDirectory>./TestResults</OutputDirectory>
-          
-          <!-- Exclude specific namespaces -->
-          <Exclude>
-            Shimadzu.Bridge.ReportItem.AcquisitionMethod.Proto.*;
-            Shimadzu.Bridge.ReportItem.AcquisitionMethod.ListBoxItem;
-            Shimadzu.Bridge.ReportItem.AcquisitionMethod.Proto.AcquisitionMethodDoubleList;
-            Shimadzu.Bridge.ReportItem.AcquisitionMethod.Proto.AcquisitionMethodHeader;
-            Shimadzu.Bridge.ReportItem.AcquisitionMethod.Proto.AcquisitionMethodItem
-          </Exclude>
 
-          <!-- Keep your existing ExcludeByFile section for Designer files -->
+          <!-- File-based exclusions for your specific files -->
           <ExcludeByFile>
-            <File>**/Resource.Designer.cs</File>
-            <File>**/Resource.ja-JP.Designer.cs</File>
-            <File>**/Chromatogram.cs</File>
+            <!-- Proto files -->
+            <File>**/AcquisitionMethod.proto</File>
+            <File>**/AcquisitionMethodConfiguration.proto</File>
+            
+            <!-- CS files -->
+            <File>**/AcquisitionMethodDataManage.cs</File>
+            <File>**/AcquisitionMethodResourceModel.cs</File>
+            <File>**/AcquisitionMethodReportItemDetailDialog.cs</File>
+            <File>**/ListBoxItem.cs</File>
           </ExcludeByFile>
+
+          <!-- Namespace-based exclusions as a backup -->
+          <Exclude>
+            Shimadzu.Bridge.ReportItem.AcquisitionMethod.AcquisitionMethodDataManage;
+            Shimadzu.Bridge.ReportItem.AcquisitionMethod.AcquisitionMethodResourceModel;
+            Shimadzu.Bridge.ReportItem.AcquisitionMethod.AcquisitionMethodReportItemDetailDialog;
+            Shimadzu.Bridge.ReportItem.AcquisitionMethod.ListBoxItem
+          </Exclude>
         </Configuration>
       </DataCollector>
     </DataCollectors>
