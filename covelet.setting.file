@@ -11,19 +11,24 @@
           <OutputDirectory>./TestResults</OutputDirectory>
           
           <!-- Exclude specific files and namespaces -->
-          <ExcludeByFile>
-            **/ListBoxItem.cs
-          </ExcludeByFile>
           <Exclude>
-            [Shimadzu.Bridge.ReportItem.AcquisitionMethod.Proto.*]*
-            [Shimadzu.Bridge.ReportItem.AcquisitionMethod.ListBoxItem]*
+            [Shimadzu.Bridge.ReportItem.AcquisitionMethod.AcquisitionMethodReportItemDetailDialog]*
             [Shimadzu.Bridge.ReportItem.AcquisitionMethod.Proto.AcquisitionMethodDoubleList]*
+            [Shimadzu.Bridge.ReportItem.AcquisitionMethod.Proto.AcquisitionMethodHeader]*
+            [Shimadzu.Bridge.ReportItem.AcquisitionMethod.Proto.AcquisitionMethodHeaderInformation]*
+            [Shimadzu.Bridge.ReportItem.AcquisitionMethod.Proto.AcquisitionMethodList]*
           </Exclude>
+          <ExcludeByFile>
+            **/AcquisitionMethodReportItemDetailDialog.cs
+            **/AcquisitionMethodDoubleList.cs
+            **/AcquisitionMethodHeader.cs
+            **/AcquisitionMethodHeaderInformation.cs
+            **/AcquisitionMethodList.cs
+          </ExcludeByFile>
           <ExcludeByAttribute>
-            Obsolete
             CompilerGeneratedAttribute
             GeneratedCodeAttribute
-            ExcludeFromCodeCoverage
+            ExcludeFromCodeCoverageAttribute
           </ExcludeByAttribute>
           
           <!-- Optional: Include branch coverage -->
