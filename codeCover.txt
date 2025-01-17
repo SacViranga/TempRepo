@@ -10,6 +10,8 @@ e:
 cd E:\bridge-app-report-items-mindteck\dev\src\TestProject\Shimadzu.Bridge.ReportItem.Method.Test
 dotnet add package coverlet.msbuild
 dotnet test --collect:"XPlat Code Coverage" 
+dotnet test --collect:"XPlat Code Coverage" --settings coverlet.runsettings // new
+
 reportgenerator -reports:"TestResults\*\coverage.cobertura.xml" -targetdir:"coveragereport" -reporttypes:Html
 rm TestResults -r -force
 
