@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RunSettings>
+  <DataCollectionRunSettings>
+    <DataCollectors>
+      <DataCollector friendlyName="XPlat Code Coverage">
+        <Configuration>
+          <!-- Output format -->
+          <Format>cobertura</Format>
+          
+          <!-- Output directory -->
+          <OutputDirectory>./TestResults</OutputDirectory>
+          
+          <!-- Exclude specific files and namespaces -->
+          <ExcludeByFile>
+            **/ListBoxItem.cs
+          </ExcludeByFile>
+          <Exclude>
+            [Shimadzu.Bridge.ReportItem.AcquisitionMethod.Proto.*]*
+            [Shimadzu.Bridge.ReportItem.AcquisitionMethod.ListBoxItem]*
+            [Shimadzu.Bridge.ReportItem.AcquisitionMethod.Proto.AcquisitionMethodDoubleList]*
+          </Exclude>
+          <ExcludeByAttribute>
+            Obsolete
+            CompilerGeneratedAttribute
+            GeneratedCodeAttribute
+            ExcludeFromCodeCoverage
+          </ExcludeByAttribute>
+          
+          <!-- Optional: Include branch coverage -->
+          <IncludeBranches>false</IncludeBranches>
+        </Configuration>
+      </DataCollector>
+    </DataCollectors>
+  </DataCollectionRunSettings>
+</RunSettings>
