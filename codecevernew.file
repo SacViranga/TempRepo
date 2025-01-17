@@ -1,0 +1,28 @@
+<RunSettings>
+  <DataCollectionRunSettings>
+    <DataCollectors>
+      <DataCollector friendlyName="XPlat Code Coverage">
+        <Configuration>
+          <Format>cobertura</Format>
+          <OutputDirectory>./TestResults</OutputDirectory>
+          
+          <!-- Exclude specific namespaces -->
+          <Exclude>
+            Shimadzu.Bridge.ReportItem.AcquisitionMethod.Proto.*;
+            Shimadzu.Bridge.ReportItem.AcquisitionMethod.ListBoxItem;
+            Shimadzu.Bridge.ReportItem.AcquisitionMethod.Proto.AcquisitionMethodDoubleList;
+            Shimadzu.Bridge.ReportItem.AcquisitionMethod.Proto.AcquisitionMethodHeader;
+            Shimadzu.Bridge.ReportItem.AcquisitionMethod.Proto.AcquisitionMethodItem
+          </Exclude>
+
+          <!-- Keep your existing ExcludeByFile section for Designer files -->
+          <ExcludeByFile>
+            <File>**/Resource.Designer.cs</File>
+            <File>**/Resource.ja-JP.Designer.cs</File>
+            <File>**/Chromatogram.cs</File>
+          </ExcludeByFile>
+        </Configuration>
+      </DataCollector>
+    </DataCollectors>
+  </DataCollectionRunSettings>
+</RunSettings>
