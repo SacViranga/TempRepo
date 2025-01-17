@@ -12,3 +12,8 @@ dotnet add package coverlet.msbuild
 dotnet test --collect:"XPlat Code Coverage" 
 reportgenerator -reports:"TestResults\*\coverage.cobertura.xml" -targetdir:"coveragereport" -reporttypes:Html
 rm TestResults -r -force
+
+dotnet test --collect:"XPlat Code Coverage" \
+  /p:Exclude="[MyApp.Services]*;[MyApp.Utilities]*" \
+  /p:ExcludeByFile="**/Services/HelperService.cs;**/Utilities/UtilityHelper.cs"
+
