@@ -1,0 +1,19 @@
+@echo off
+setlocal enabledelayedexpansion
+
+:: Set source DLL path
+set "sourceDll=C:\Path\To\Your\File.dll"
+
+:: Set target root folder where subfolders exist
+set "targetRoot=C:\Path\To\Target\Root"
+
+:: Loop through all directories inside the target root folder
+for /d %%F in ("%targetRoot%\*") do (
+    if exist "%%F" (
+        echo Copying %sourceDll% to %%F
+        copy /Y "%sourceDll%" "%%F\"
+    )
+)
+
+echo All files copied successfully!
+pause
