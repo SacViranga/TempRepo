@@ -1,0 +1,72 @@
+@echo off
+setlocal enabledelayedexpansion
+
+rem This bat file is created to build report items and copy the assets to the plugin folder.
+rem Unit test projects are also available under the build target folder and this batch file excludes this place from the build target.
+
+set "DLL_COPY_TO=%~dp0..\supplies_from_SCJ\ReportApplication\plugins\ReportItems"
+set "SOURCE_TARGET_DIR=%~dp0..\src"
+set "EXCLUDED_DIR=TestProject"
+
+echo Build all report items under %SOURCE_TARGET_DIR% except for %EXCLUDED_DIR% directory.
+echo Then copy the generated dll files to %DLL_COPY_TO%.
+echo Do you really execute?
+pause
+
+rem Process starts ------------------------------------------
+pushd %SOURCE_TARGET_DIR%
+
+rem Find csproj files and build projects.
+for /r "%SOURCE_TARGET_DIR%" %%f in (*.csproj) do (
+    rem Exclude the unit test project directory.
+    echo %%f | findstr "%EXCLUDED_DIR%" >nul        
+    
+    rem When csproj file is found, build the project.
+    if errorlevel 1 (
+        echo /// Building %%f..
+        dotnet build "%%f"
+
+        if errorlevel 1 (
+            echo Build failed for %%f
+        ) else (
+            set NAME_SPACE=%%~nf
+            set DLL_NAME=!NAME_SPACE!.dll
+            set DLL_PATH=%%~dpf\bin\Debug\net8.0-windows\!DLL_NAME!
+
+            rem Copy dll file to the plugin folder.
+            if exist "!DLL_PATH!" (
+                set "EACH_DLL_COPY_TO=%DLL_COPY_TO%\!NAME_SPACE!"
+                echo /// Copying !DLL_PATH! to %DLL_COPY_TO%\!NAME_SPACE!
+                if not exist "!EACH_DLL_COPY_TO!" mkdir "!EACH_DLL_COPY_TO!"
+                copy "!DLL_PATH!" "!EACH_DLL_COPY_TO!"
+            ) else (
+                echo !DLL_PATH! not found
+            )
+        )       
+    ) else (
+        echo /// Skipping build for %%f
+    )
+)
+popd
+
+echo First process completed successfully!
+pause
+
+rem =================================================================
+rem Start Second Process: Additional Copy Process
+rem =================================================================
+
+echo Starting additional copy process...
+
+:: Define source and destination for additional copy
+set "ADDITIONAL_SOURCE=C:\Path\To\Additional\DLLs"
+set "ADDITIONAL_DEST=C:\Path\To\Destination\Folder"
+
+:: Loop through all DLL files in the source folder and copy them
+for %%f in ("%ADDITIONAL_SOURCE%\*.dll") do (
+    echo Copying %%f to %ADDITIONAL_DEST%
+    copy /Y "%%f" "%ADDITIONAL_DEST%"
+)
+
+echo Additional copy process completed!
+pause
