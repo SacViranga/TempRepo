@@ -1,0 +1,3 @@
+https://github.com/enterprises/shimadzu-group/sso/
+
+https://github.com/shimadzu-corp
